@@ -1,22 +1,22 @@
 class CompareNumber {
+
     static compareNumber(answer, input) {
-        const answerArray = answer.split('');
+
+        console.log(answer);
+        const answerArray = answer.toString().split('');
         const inputArray = input.split('');
 
         let a = 0;
         let b = 0;
 
-        answerArray.map(answer => {
-            const input = inputArray.find(input => answer === input);
 
-            if (input) {
-                const answerPosition = answerArray.indexOf(answer);
-                const inputPosition = inputArray.indexOf(input);
-
-                answerPosition === inputPosition ? a++ : b++;
+        inputArray.map(input=> {
+            
+            const answer = answerArray.find(answer=>answer === input);
+            if (answer) {
+                answerArray.indexOf(answer) === inputArray.indexOf(input) ? a++ : b++
             }
         });
-
         return `${a}A${b}B`;
     }
 }
