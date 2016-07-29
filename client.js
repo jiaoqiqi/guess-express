@@ -1,40 +1,38 @@
-const express = require('express');
+var express = require('express');
 const request = require('request');
 
 console.log('Welcome!\n');
 
-const options = {
+const getAnswer = {
     baseUrl: 'http://localhost:3000',
     url: '/answer',
     method: 'GET',
-    jason: true
+    json: true
 };
 
-request(options, (err, res, body) => {
+request(getAnswer, (err, res, body) => {
     const answer = body;
-    // console.log(answer);
-    let chances = 6;
-
+    console.log(answer);
+    var chances = 6;
     console.log(`Please input your number(${chances}):`);
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', (input) => {
-        if (!validate(input.trim())) {
-            console.log('Cannot input duplicate number!');
-            console.log(`Please input your number (${chances}):`);
+        if (! (validate(input.trim()))) {
+            console.log('Cannot input duplicate numbers!');
+            console.log(`Please input your number(${chances}):`);
         }
         else {
-            
             const compare = {
                 baseUrl: 'http://localhost:3000',
                 url: '/compare',
                 method: 'POST',
-                jason: true,
+                json: true,
                 body: {
                     input: input,
                     answer: answer
                 }
             }
-            request(compare, (err, res, body) => {
+            request(compare, (err, res, body)=> {
                 if (body === '4A0B') {
                     console.log('Congratulations!');
                     process.exit();
@@ -45,15 +43,15 @@ request(options, (err, res, body) => {
                         console.log('Game Over\n');
                         console.log(`Answer:${answer}`);
                         process.exit();
-                    }
-                    else {
+                    } else {
                         console.log(`Please input your number(${chances}):`);
                     }
                 }
-            })
+
+            });
         }
-    })
-})
+    });
+});
 
 
 function validate(input) {
